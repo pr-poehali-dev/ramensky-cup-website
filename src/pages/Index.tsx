@@ -4,10 +4,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import Icon from '@/components/ui/icon';
+import RegistrationForm from '@/components/RegistrationForm';
 
 export default function Index() {
   const [activeSection, setActiveSection] = useState('home');
+  const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
 
   const teams = {
     groupA: [
@@ -99,7 +102,11 @@ export default function Index() {
                   Престижный турнир среди любительских команд Раменского района. 8 команд, 2 группы, один победитель.
                 </p>
                 <div className="flex gap-4">
-                  <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg px-8 gold-glow">
+                  <Button 
+                    size="lg" 
+                    onClick={() => setIsRegistrationOpen(true)}
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg px-8 gold-glow"
+                  >
                     <Icon name="UserPlus" size={20} className="mr-2" />
                     Регистрация команды
                   </Button>
@@ -433,6 +440,20 @@ export default function Index() {
           </div>
         )}
       </main>
+
+      <Dialog open={isRegistrationOpen} onOpenChange={setIsRegistrationOpen}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-card border-primary">
+          <DialogHeader>
+            <DialogTitle className="text-3xl font-bold text-gradient">
+              Регистрация команды
+            </DialogTitle>
+            <DialogDescription className="text-muted-foreground text-base">
+              Заполните форму для участия в Раменском кубке любителей 2025
+            </DialogDescription>
+          </DialogHeader>
+          <RegistrationForm onSuccess={() => setIsRegistrationOpen(false)} />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

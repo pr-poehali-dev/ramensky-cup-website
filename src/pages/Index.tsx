@@ -7,10 +7,12 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import Icon from '@/components/ui/icon';
 import RegistrationForm from '@/components/RegistrationForm';
+import MatchSchedule from '@/components/MatchSchedule';
 
 export default function Index() {
   const [activeSection, setActiveSection] = useState('home');
   const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
+  const [isScheduleOpen, setIsScheduleOpen] = useState(false);
 
   const teams = {
     groupA: [
@@ -110,7 +112,12 @@ export default function Index() {
                     <Icon name="UserPlus" size={20} className="mr-2" />
                     Регистрация команды
                   </Button>
-                  <Button size="lg" variant="outline" className="border-primary text-primary hover:bg-primary/10 font-bold">
+                  <Button 
+                    size="lg" 
+                    variant="outline" 
+                    onClick={() => setIsScheduleOpen(true)}
+                    className="border-primary text-primary hover:bg-primary/10 font-bold"
+                  >
                     Расписание игр
                   </Button>
                 </div>
@@ -452,6 +459,21 @@ export default function Index() {
             </DialogDescription>
           </DialogHeader>
           <RegistrationForm onSuccess={() => setIsRegistrationOpen(false)} />
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={isScheduleOpen} onOpenChange={setIsScheduleOpen}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-card border-primary">
+          <DialogHeader>
+            <DialogTitle className="text-3xl font-bold text-gradient flex items-center gap-2">
+              <Icon name="CalendarDays" size={32} className="text-primary" />
+              Расписание матчей
+            </DialogTitle>
+            <DialogDescription className="text-muted-foreground text-base">
+              Полное расписание всех матчей Раменского кубка любителей 2025
+            </DialogDescription>
+          </DialogHeader>
+          <MatchSchedule />
         </DialogContent>
       </Dialog>
     </div>
